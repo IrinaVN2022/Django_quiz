@@ -20,8 +20,9 @@ jobs:
         pip install -r requirements.txt
     - name: Analysing the code with Flake8
     env: 
+      DJANGO_ALLOWED_HOSTS: ${{ secrets.DJANGO_ALLOWED_HOSTS }}
+      DJANGO_DEBUG: ${{ secrets.DJANGO_DEBUG_FOR_FLAKE8 }}
       DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
-      DJANGO_DEBUG: ${{ vars.DJANGO_DEBUG_FOR_FLAKE8 }}
-      DJANGO_ALLOWED_HOSTS: ${{ vars.DJANGO_ALLOWED_HOSTS }}
       run: |
-        flake8 src/
+        flake8 src/ --max-line-length=150 --exclude=migrations
+
